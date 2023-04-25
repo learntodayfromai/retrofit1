@@ -26,19 +26,21 @@ import kotlinx.coroutines.*
  * MainActivity sets the content view activity_main, a fragment container that contains
  * overviewFragment.
  */
-
-const val TAG = "MainActivity"
+private val TAG = MainActivity::class.qualifiedName
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         GlobalScope.launch(Dispatchers.Default) {
-            Log.v(TAG, "${getValue()}")
+            val temp = async{getValue()}
+            Log.d(TAG, "${temp.await()}")
         }
     }
 
     suspend fun getValue():Double{
-        delay(3000)
+        delay(5000)
         return Math.random()
     }
 }

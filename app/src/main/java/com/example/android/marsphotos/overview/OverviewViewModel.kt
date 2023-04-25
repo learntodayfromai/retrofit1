@@ -16,6 +16,7 @@
 
 package com.example.android.marsphotos.overview
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,10 +26,13 @@ import com.example.android.marsphotos.network.MarsPhoto
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
+private val TAG = OverviewViewModel::class.qualifiedName
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
  */
 class OverviewViewModel : ViewModel() {
+
+
 
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<String>()
@@ -39,6 +43,7 @@ class OverviewViewModel : ViewModel() {
      * Call getMarsPhotos() on init so we can display status immediately.
      */
     init {
+        Log.d(TAG,"init")
         getMarsPhotos()
     }
 

@@ -17,15 +17,28 @@
 package com.example.android.marsphotos
 
 import android.os.Bundle
+import android.provider.Settings.Global
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.*
 
 /**
  * MainActivity sets the content view activity_main, a fragment container that contains
  * overviewFragment.
  */
+
+const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        GlobalScope.launch(Dispatchers.Default) {
+            Log.v(TAG, "${getValue()}")
+        }
+    }
+
+    suspend fun getValue():Double{
+        delay(3000)
+        return Math.random()
     }
 }

@@ -27,6 +27,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MarsPhotos">
+
+        <!-- Add the service definition here -->
+        <service android:name=".MyService" />
+
         <activity android:name="com.example.android.marsphotos.MainActivity"
             android:exported="true">
             <intent-filter>

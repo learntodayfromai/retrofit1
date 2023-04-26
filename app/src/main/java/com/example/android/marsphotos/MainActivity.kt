@@ -16,6 +16,7 @@
 
 package com.example.android.marsphotos
 
+import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings.Global
 import android.util.Log
@@ -34,7 +35,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        println("main 1")
+        println("main before call")
+        val intent = Intent(this,MyService::class.java)
+        startService(intent)
+        /*println("main 1")
         GlobalScope.launch {
             println("main 2")
             delay(3000)
@@ -45,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             println("main 2.5")
             delay(1000)
             println("main 5")
-        }
+        }*/
         /*runBlocking {
             val startTime = System.currentTimeMillis()
             val job = launch(Dispatchers.Default) {

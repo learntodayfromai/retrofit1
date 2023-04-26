@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.provider.Settings.Global
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.*
 
 /**
@@ -33,14 +34,68 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        GlobalScope.launch(Dispatchers.Default) {
-            val temp = async{getValue()}
-            Log.d(TAG, "${temp.await()}")
+        println("main 1")
+        GlobalScope.launch {
+            println("main 2")
+            delay(3000)
+            println("main 3")
         }
+        println("main 4")
+        runBlocking {
+            println("main 2.5")
+            delay(1000)
+            println("main 5")
+        }
+        /*runBlocking {
+            val startTime = System.currentTimeMillis()
+            val job = launch(Dispatchers.Default) {
+                var nextPrintTime = startTime
+                var i = 0
+                while (isActive) { // computation loop, just wastes CPU
+                    // print a message twice a second
+                    if (System.currentTimeMillis() >= nextPrintTime) {
+                        println("main: I'm sleeping ${i++} ...")
+                        nextPrintTime += 500L
+                    }
+                }
+            }
+            delay(1300L) // delay a bit
+            println("main: I'm tired of waiting!")
+            job.cancelAndJoin() // cancels the job and waits for its completion
+            println("main: Now I can quit.")
+        }*/
+
+
+        /*Log.d(TAG,"before runblock")
+
+        runBlocking {
+            val defer = async{
+                repeat(1000){i->
+                    Log.d(TAG,"I am sleeping $i")
+                    delay(500)
+                }
+            }
+            delay(3000)
+            Log.d(TAG,"tired of waiting")
+            defer.cancel()
+            defer.join()
+        }
+
+        Log.d(TAG,"after runblock")*/
+    }
+
+    private suspend fun doWork() = coroutineScope{
+        val job = launch{
+            delay(2000)
+            Log.d(TAG,"World")
+        }
+        Log.d(TAG,"Hello")
+        job.join()
+        Log.d(TAG,"Done")
     }
 
     suspend fun getValue():Double{
-        delay(5000)
+        delay(3000)
         return Math.random()
     }
 }
